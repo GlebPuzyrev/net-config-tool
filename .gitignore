@@ -6,6 +6,7 @@ venv/
 
 # User Generated Files (Contains Secrets!)
 hosts.yaml
+normir.log
 
 # OS junk
 .DS_Store
