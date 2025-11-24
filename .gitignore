@@ -1,0 +1,12 @@
+# Python junk
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# User Generated Files (Contains Secrets!)
+hosts.yaml
+
+# OS junk
+.DS_Store
+

@@ -1,0 +1,230 @@
+2025-11-23 22:37:39,484 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates'} on 1 hosts
+2025-11-23 22:37:39,490 - nornir.core.task -    ERROR -      start() - Host 'lab_device': task 'template_file' failed with traceback:
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_jinja2/plugins/tasks/template_file.py", line 43, in template_file
+    text = t.render(host=task.host, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "templates/ios/base_sec.j2", line 18, in top-level template code
+    {% if ntp_server %}
+jinja2.exceptions.UndefinedError: 'ntp_server' is undefined
+
+2025-11-23 22:39:55,304 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates'} on 1 hosts
+2025-11-23 22:40:15,956 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Auto-Generated Config for 192.168.68.100 ---', '!', 'service password-encryption', 'service tcp-keepalives-in', 'service tcp-keepalives-out', '!', 'ip domain-name lab.local', 'ip ssh version 2', 'ip ssh time-out 60', 'ip ssh authentication-retries 2', '!', 'no ip http server', 'no ip http secure-server', '!', '! NTP (Conditional)', '   <-- ИЗМЕНИЛИ ТУТ', 'ntp server 1.1.1.1  <-- И ТУТ', '!', '! Syslog (Conditional)', ' <-- ИЗМЕНИЛИ ТУТ', 'logging host 192.168.122.50 <-- И ТУТ', 'logging trap notifications', '!', 'line vty 0 4', ' exec-timeout 5 0', ' transport input ssh', ' logging synchronous', '!', '! --- End ---'], 'transport_options': {'open_cmd': ['-o', 'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null']}} on 1 hosts
+2025-11-23 22:40:15,957 - nornir.core.task -    ERROR -      start() - Host 'lab_device': task 'send_configs' failed with traceback:
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: send_configs() got an unexpected keyword argument 'transport_options'
+
+2025-11-23 22:43:17,358 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates'} on 1 hosts
+2025-11-23 22:43:21,332 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Auto-Generated Config for 192.168.68.100 ---', '!', 'service password-encryption', 'service tcp-keepalives-in', 'service tcp-keepalives-out', '!', 'ip domain-name lab.local', 'ip ssh version 2', 'ip ssh time-out 60', 'ip ssh authentication-retries 2', '!', 'no ip http server', 'no ip http secure-server', '!', '! NTP (Conditional)', '   <-- ИЗМЕНИЛИ ТУТ', 'ntp server 1.1.1.1  <-- И ТУТ', '!', '! Syslog (Conditional)', ' <-- ИЗМЕНИЛИ ТУТ', 'logging host 10.10.10.50 <-- И ТУТ', 'logging trap notifications', '!', 'line vty 0 4', ' exec-timeout 5 0', ' transport input ssh', ' logging synchronous', '!', '! --- End ---']} on 1 hosts
+2025-11-23 22:43:21,427 - nornir.core.task -    ERROR -      start() - Host 'lab_device': task 'send_configs' failed with traceback:
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_scrapli/tasks/core/send_configs.py", line 59, in send_configs
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 476, in get_connection
+    self.open_connection(
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 528, in open_connection
+    conn_obj.open(
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_scrapli/connection.py", line 106, in open
+    connection.open()
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/driver/base/sync_driver.py", line 106, in open
+    self.channel.channel_authenticate_ssh(
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 224, in decorate
+    return _multiprocessing_timeout(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 115, in _multiprocessing_timeout
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/channel/sync_channel.py", line 297, in channel_authenticate_ssh
+    self._ssh_message_handler(output=authenticate_buf)
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/channel/base_channel.py", line 481, in _ssh_message_handler
+    raise ScrapliAuthenticationFailed(msg)
+scrapli.exceptions.ScrapliAuthenticationFailed: No matching key exchange found for host, their offer: diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
+
+2025-11-23 22:45:43,111 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates'} on 1 hosts
+2025-11-23 22:45:44,560 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Auto-Generated Config for 192.168.68.100 ---', '!', 'service password-encryption', 'service tcp-keepalives-in', 'service tcp-keepalives-out', '!', 'ip domain-name lab.local', 'ip ssh version 2', 'ip ssh time-out 60', 'ip ssh authentication-retries 2', '!', 'no ip http server', 'no ip http secure-server', '!', '! NTP (Conditional)', '   <-- ИЗМЕНИЛИ ТУТ', 'ntp server 1.1.1.1  <-- И ТУТ', '!', '! Syslog (Conditional)', ' <-- ИЗМЕНИЛИ ТУТ', 'logging host 10.10.10.50 <-- И ТУТ', 'logging trap notifications', '!', 'line vty 0 4', ' exec-timeout 5 0', ' transport input ssh', ' logging synchronous', '!', '! --- End ---']} on 1 hosts
+2025-11-23 22:46:17,333 - nornir.core.task -    ERROR -      start() - Host 'lab_device': task 'send_configs' failed with traceback:
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_scrapli/tasks/core/send_configs.py", line 69, in send_configs
+    scrapli_response = scrapli_conn.send_configs(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/driver/network/sync_driver.py", line 540, in send_configs
+    responses = super().send_commands(
+                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/driver/generic/sync_driver.py", line 251, in send_commands
+    response = self._send_command(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 307, in decorate
+    result = wrapped_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/driver/generic/sync_driver.py", line 167, in _send_command
+    raw_response, processed_response = self.channel.send_input(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 224, in decorate
+    return _multiprocessing_timeout(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 110, in _multiprocessing_timeout
+    return _handle_timeout(
+           ^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 142, in _handle_timeout
+    raise ScrapliTimeout(message)
+scrapli.exceptions.ScrapliTimeout: timed out sending input to device
+
+2025-11-23 22:52:13,629 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates'} on 1 hosts
+2025-11-23 22:52:19,018 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Auto-Generated Config for 192.168.68.100 ---', '!', 'service password-encryption', 'service tcp-keepalives-in', 'service tcp-keepalives-out', '!', 'ip domain-name lab.local', 'ip ssh version 2', 'ip ssh time-out 60', 'ip ssh authentication-retries 2', '!', 'no ip http server', 'no ip http secure-server', '!', 'hostname configured', '!', '! NTP (Conditional)', '   <-- ИЗМЕНИЛИ ТУТ', 'ntp server 1.1.1.1  <-- И ТУТ', '!', '! Syslog (Conditional)', ' <-- ИЗМЕНИЛИ ТУТ', 'logging host 2.2.2.2 <-- И ТУТ', 'logging trap notifications', '!', 'line vty 0 4', ' exec-timeout 5 0', ' transport input ssh', ' logging synchronous', '!', '! --- End ---']} on 1 hosts
+2025-11-23 22:52:51,959 - nornir.core.task -    ERROR -      start() - Host 'lab_device': task 'send_configs' failed with traceback:
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_scrapli/tasks/core/send_configs.py", line 69, in send_configs
+    scrapli_response = scrapli_conn.send_configs(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/driver/network/sync_driver.py", line 540, in send_configs
+    responses = super().send_commands(
+                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/driver/generic/sync_driver.py", line 251, in send_commands
+    response = self._send_command(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 307, in decorate
+    result = wrapped_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/driver/generic/sync_driver.py", line 167, in _send_command
+    raw_response, processed_response = self.channel.send_input(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 224, in decorate
+    return _multiprocessing_timeout(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 110, in _multiprocessing_timeout
+    return _handle_timeout(
+           ^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/decorators.py", line 142, in _handle_timeout
+    raise ScrapliTimeout(message)
+scrapli.exceptions.ScrapliTimeout: timed out sending input to device
+
+2025-11-23 22:54:06,408 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates'} on 1 hosts
+2025-11-23 22:54:23,333 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Auto-Generated Config for 192.168.68.100 ---', '!', 'service password-encryption', 'service tcp-keepalives-in', 'service tcp-keepalives-out', '!', 'ip domain-name lab.local', 'ip ssh version 2', 'ip ssh time-out 60', 'ip ssh authentication-retries 2', '!', 'no ip http server', 'no ip http secure-server', '!', 'hostname configured', '!', '! NTP (Conditional)', '', 'ntp server 1.1.1.1 ', '!', '! Syslog (Conditional)', '', 'logging host 10.10.10.50 ', 'logging trap notifications', '!', 'line vty 0 4', ' exec-timeout 5 0', ' transport input ssh', ' logging synchronous', '!', '! --- End ---']} on 1 hosts
+2025-11-23 23:01:11,856 -  nornir.core -     INFO -        run() - Running task '<lambda>' with args {} on 1 hosts
+2025-11-23 23:01:20,829 -  nornir.core -     INFO -        run() - Running task 'push_config_task' with args {} on 1 hosts
+2025-11-23 23:01:20,833 - nornir.core.task -    ERROR -      start() - Host '192.168.68.100': task 'push_config_task' failed with traceback:
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/streamlit/runtime/state/session_state.py", line 471, in __getitem__
+    base_value = self._getitem(widget_id, key)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/streamlit/runtime/state/session_state.py", line 524, in _getitem
+    raise KeyError
+KeyError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/app.py", line 202, in push_config_task
+    config_to_push = st.session_state['generated_configs'].get(task.host.name)
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/streamlit/runtime/state/session_state_proxy.py", line 101, in __getitem__
+    return get_session_state()[key]
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/streamlit/runtime/state/safe_session_state.py", line 104, in __getitem__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/streamlit/runtime/state/session_state.py", line 478, in __getitem__
+    raise KeyError(_missing_key_error_message(key))
+KeyError: 'st.session_state has no key "generated_configs". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization'
+
+2025-11-23 23:09:04,813 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates'} on 1 hosts
+2025-11-23 23:09:10,248 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Auto-Generated Config for 192.168.68.100 ---', '!', 'service password-encryption', 'service tcp-keepalives-in', 'service tcp-keepalives-out', '!', 'ip domain-name lab.local', 'ip ssh version 2', 'ip ssh time-out 60', 'ip ssh authentication-retries 2', '!', 'no ip http server', 'no ip http secure-server', '!', 'hostname configured', '!', '! NTP (Conditional)', 'ntp server 1.1.1.1', '!', '! Syslog (Conditional)', 'logging host 10.10.10.50', 'logging trap notifications', '!', 'line vty 0 4', ' exec-timeout 5 0', ' transport input ssh', ' logging synchronous', '!', '! --- End ---']} on 1 hosts
+2025-11-23 23:15:56,389 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates', 'syslog_server': 'cisco', 'ntp_server': 'misko', 'device_description': 'lambda'} on 1 hosts
+2025-11-23 23:22:05,958 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'hostname': 'Router-Lab', 'descr': 'Managed by Nornir', 'ntp_server': 'pool.ntp.org', 'syslog_server': '192.168.1.50'} on 1 hosts
+2025-11-23 23:25:21,419 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'hostname': 'Router-Lab', 'descr': 'Managed by Nornir', 'ntp_server': 'pool.ntp.org', 'syslog_server': '192.168.1.50'} on 1 hosts
+2025-11-23 23:28:00,191 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'descr': 'Managed by Nornir', 'syslog_server': '192.168.1.50', 'ntp_server': 'pool.ntp.org', 'hostname': 'Router-Lab'} on 1 hosts
+2025-11-23 23:28:05,219 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'descr': 'Managed by Nornir', 'syslog_server': '192.168.1.50', 'ntp_server': 'pool.ntp.org', 'hostname': 'Router-Lab'} on 1 hosts
+2025-11-23 23:30:08,120 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'hostname': 'Router-Lab', 'ntp_server': 'pool.ntp.org', 'syslog_server': '192.168.1.50', 'descr': 'Managed by Nornir'} on 1 hosts
+2025-11-23 23:30:38,245 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/base_sec.j2', 'path': 'templates', 'device_description': '', 'ntp_server': 'pool.ntp.org', 'syslog_server': '192.168.1.50'} on 1 hosts
+2025-11-23 23:34:42,784 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'fortios/interfaces.j2', 'path': 'templates', 'hostname': 'Router-Lab', 'descr': 'Managed by Nornir', 'ntp_server': 'pool.ntp.org'} on 1 hosts
+2025-11-23 23:36:10,885 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'hostname': 'Router-Lab', 'descr': 'Managed by Nornir', 'ntp_server': 'pool.ntp.org', 'syslog_server': '192.168.1.50'} on 1 hosts
+2025-11-23 23:36:14,720 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Config with Defaults ---', 'service password-encryption', '!', 'hostname Router-Lab', '!', 'ntp server pool.ntp.org', '!', 'logging host 192.168.1.50', '!', 'description Managed by Nornir', '!']} on 1 hosts
+2025-11-23 23:36:14,727 - nornir.core.task -    ERROR -      start() - Host 'lab_device': task 'send_configs' failed with traceback:
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/factory.py", line 160, in _get_community_platform_details
+    scrapli_community_platform = importlib.import_module(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'scrapli_community.cisco.ios'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_scrapli/connection.py", line 99, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/factory.py", line 508, in __new__
+    final_driver, additional_kwargs = cls._get_driver(platform=platform, variant=variant)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/factory.py", line 329, in _get_driver
+    final_driver, additional_kwargs = cls._get_community_driver(
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/factory.py", line 291, in _get_community_driver
+    platform_details = _get_community_platform_details(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/scrapli/factory.py", line 171, in _get_community_platform_details
+    raise ScrapliModuleNotFound(warning) from exc
+scrapli.exceptions.ScrapliModuleNotFound: 
+
+************************************************************************* Module not found! *************************************************************************
+Scrapli Community platform 'cisco_ios` not found!
+To resolve this issue, ensure you have the correct platform name, and that a scrapli  community platform of that name exists!
+*********************************************************************************************************************************************************************
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_scrapli/tasks/core/send_configs.py", line 59, in send_configs
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 476, in get_connection
+    self.open_connection(
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 528, in open_connection
+    conn_obj.open(
+  File "/home/jazz/config_tool/venv/lib/python3.12/site-packages/nornir_scrapli/connection.py", line 101, in open
+    raise NornirScrapliInvalidPlatform(
+nornir_scrapli.exceptions.NornirScrapliInvalidPlatform: Provided platform `cisco_ios` is not a valid scrapli or napalm platform, or is not a valid scrapli-community platform.
+
+2025-11-24 10:46:42,065 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'hostname': 'Router-Lab', 'descr': 'Managed by Nornir', 'ntp_server': 'pool.ntp.org', 'syslog_server': '192.168.1.50'} on 1 hosts
+2025-11-24 10:46:47,625 -  nornir.core -     INFO -        run() - Running task 'send_configs' with args {'configs': ['! --- Config with Defaults ---', 'service password-encryption', '!', 'hostname Router-Lab', '!', 'ntp server pool.ntp.org', '!', 'logging host 192.168.1.50', '!']} on 1 hosts
+2025-11-24 10:51:16,897 -  nornir.core -     INFO -        run() - Running task 'template_file' with args {'template': 'ios/extended.j2', 'path': 'templates', 'hostname': 'FW-01', 'syslog_server': '192.168.1.50', 'ntp_server': 'pool.ntp.org', 'descr': 'Mgmt Interface'} on 1 hosts

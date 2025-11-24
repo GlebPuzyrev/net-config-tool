@@ -1,0 +1,12 @@
+! --- Config with Defaults ---
+service password-encryption
+!
+hostname {{ hostname | default('Router-Lab') }}
+!
+ntp server {{ ntp_server | default('pool.ntp.org') }}
+!
+logging host {{ syslog_server | default('192.168.1.50') }}
+!
+description {{ descr | default('Managed by Nornir') }}
+!
+

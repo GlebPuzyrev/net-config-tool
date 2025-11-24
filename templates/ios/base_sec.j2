@@ -1,0 +1,12 @@
+! --- Dynamic Template ---
+!
+service password-encryption
+!
+! Эти переменные скрипт найдет сам и создаст для них поля:
+ntp server {{ ntp_server }}
+logging host {{ syslog_server }}
+!
+! Можно добавить что угодно, скрипт подстроится:
+description {{ device_description }}
+!
+
