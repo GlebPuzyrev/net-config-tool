@@ -1,13 +1,16 @@
-# Python junk
+# Python
 __pycache__/
 *.py[cod]
 venv/
+
+# Environment Variables (SECRETS!)
 .env
 
-# User Generated Files (Contains Secrets!)
-hosts.yaml
-normir.log
+# Docker artifacts (if any)
+*.tar
+*.tar.gz
 
-# OS junk
-.DS_Store
+# User Generated
+hosts.yaml
+nornir.log
 
