@@ -13,7 +13,6 @@ st.set_page_config(page_title="Config Tool", layout="wide")
 st.title("Config Tool")
 
 # --- CSS HACK FOR MONOSPACE FONT ---
-# Это заставляет обычное текстовое поле выглядеть как терминал
 st.markdown("""
 <style>
     /* Применяем моноширинный шрифт ко всем текстовым областям */
@@ -182,7 +181,6 @@ with st.sidebar:
 if st.session_state['step'] == 2:
     st.subheader(f"📝 Reviewing: {selected_template}")
     
-    # Возвращаемся к стандартному текстовому полю, но оно будет моноширинным из-за CSS
     final_config = st.text_area(
         "Generated CLI Commands:",
         value=st.session_state['generated_config'],
