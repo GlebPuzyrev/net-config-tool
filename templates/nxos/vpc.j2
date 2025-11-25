@@ -1,0 +1,132 @@
+! --- VPC configuration for NX01-02 switches---
+
+! --- NX01 --- 
+
+! --- L2/L3 Features ---
+! Ensure LACP is enabled because channel-groups are in 'mode active'
+feature lacp
+feature vpc
+
+! --- VRF Configuration ---
+! Dedicated VRF for vPC Keepalive to isolate control plane traffic from data plane
+vrf context VPC_KEEPALIVE_VRF
+  description --- vPC Keepalive VRF ---
+
+! --- vPC Domain Configuration ---
+vpc domain {{ vpc_domain | default('100')}}
+! Enable vPC Peer-Switch to present a single STP Root ID to downstream devices
+  peer-switch 
+! Set lower priority to designate this switch as vPC Primary (Default is 32768)
+  role priority 100
+! Define Keepalive link (L3) over the dedicated VRF
+  peer-keepalive destination {{ vpc_keepalive_IP_NX02 | default('169.254.100.2')}}  source {{ vpc_keepalive_IP_NX01 | default('169.254.100.1') }} vrf VPC_KEEPALIVE_VRF
+! Allow vPC peer to forward packets destined to the peer MAC address (Optimization)
+  peer-gateway
+! Enable peering with L3 devices over vPC (Critical for OSPF/BGP over vPC)
+  layer3 peer-router
+! Optimize ARP processing between vPC peers
+  ip arp synchronize
+! Restore vPC if peer fails to come up after a reload
+  auto-recovery
+
+
+! --- VPC Peer link port channel ---
+interface port-channel{{ vpc_peer_link_PO  | default('100')}}
+  description --- VPC Peer Port Channel ---
+  switchport
+  switchport mode trunk
+  spanning-tree port type network
+  vpc peer-link
+
+interface Ethernet1/53
+  description --- VPC Peer Link ---
+  switchport
+  switchport mode trunk
+  spanning-tree port type network
+  channel-group {{ vpc_peer_link_PO }} mode active
+  no shutdown
+
+interface Ethernet1/54
+  description --- VPC Peer Link ---
+  switchport
+  switchport mode trunk
+  spanning-tree port type network
+  channel-group {{ vpc_peer_link_PO }} mode active
+  no shutdown
+
+! --- VPC Keepalive ---
+interface port-channel{{ vpc_keepalive_PO | default('101')}}
+  description --- VPC Keepalive Port Channel ---
+  vrf member VPC_KEEPALIVE_VRF
+  ip address {{ vpc_keepalive_IP_NX01 }}/30
+
+interface Ethernet1/47
+  description --- VPC Keepalive Link ---
+  channel-group {{ vpc_keepalive_PO }} mode active
+  no shutdown
+
+interface Ethernet1/48
+  description --- VPC Keepalive Link ---
+  channel-group {{ vpc_keepalive_PO }} mode active
+  no shutdown
+
+
+! --- NX02 ---
+
+feature lacp
+feature vpc
+
+! --- VRF Configuration ---
+vrf context VPC_KEEPALIVE_VRF
+  description vPC Keepalive VRF
+
+! --- vPC Domain Configuration ---
+vpc domain {{ vpc_domain | default('100')}}
+  peer-switch
+  role priority 200
+  peer-keepalive destination {{ vpc_keepalive_IP_NX01 }}  source {{ vpc_keepalive_IP_NX02 }} vrf VPC_KEEPALIVE_VRF
+  peer-gateway
+  layer3 peer-router
+  ip arp synchronize
+  auto-recovery
+
+
+! --- VPC Peer link port channel ---
+interface port-channel{{ vpc_peer_link_PO }}
+  description --- VPC Peer Port Channel ---
+  switchport
+  switchport mode trunk
+  spanning-tree port type network
+  vpc peer-link
+
+interface Ethernet1/53
+  description --- VPC Peer Link ---
+  switchport
+  switchport mode trunk
+  spanning-tree port type network
+  channel-group {{ vpc_peer_link_PO }} mode active
+  no shutdown
+
+interface Ethernet1/54
+  description --- VPC Peer Link ---
+  switchport
+  switchport mode trunk
+  spanning-tree port type network
+  channel-group {{ vpc_peer_link_PO }} mode active
+  no shutdown
+
+! --- VPC Keepalive ---
+interface port-channel{{ vpc_keepalive_PO }}
+  description --- VPC Keepalive Port Channel ---
+  vrf member VPC_KEEPALIVE_VRF
+  ip address {{ vpc_keepalive_IP_NX01 }}/30
+
+interface Ethernet1/47
+  description  --- VPC Keepalive Link --
+  channel-group {{ vpc_keepalive_PO }} mode active
+  no shutdown
+
+interface Ethernet1/48
+  description --- VPC Keepalive Link ---
+  channel-group {{ vpc_keepalive_PO }} mode active
+  no shutdown

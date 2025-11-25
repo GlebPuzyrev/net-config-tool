@@ -1,0 +1,15 @@
+! --- [Section 1.1.1.1] Configure AAA Authentication - TACACS (Level 1) ---
+feature tacacs+
+! Define your TACACS+ servers
+tacacs-server host {{ tacacs_server1 }}  key 7 {{ tacacs_key }}
+tacacs-server host {{ tacacs_server2 }}  key 7 {{ tacacs_key }}
+! Create the server group
+aaa group server tacacs+ TACACSGROUP
+  server {{ tacacs_server1 }}
+  server {{ tacacs_server2 }}
+  use-vrf management
+  source-interface mgmt0
+
+! Apply to login methods
+aaa authentication login default group TACACSGROUP local
+aaa authentication login console group TACACSGROUP local

@@ -6,6 +6,8 @@ from jinja2 import Environment, FileSystemLoader, meta, nodes
 from nornir import InitNornir
 from nornir_scrapli.tasks import send_configs
 from nornir_jinja2.plugins.tasks import template_file
+from streamlit_ace import st_ace
+
 
 # --- CONFIGURATION ---
 # Suppress Nornir logs in the console to keep it clean
@@ -196,14 +198,24 @@ with st.sidebar:
                 st.error(f"Critical Error: {e}")
 
 # --- MAIN WINDOW (REVIEW & PUSH) ---
+# --- MAIN WINDOW ---
 
 if st.session_state['step'] == 2:
     st.subheader(f"📝 Reviewing: {selected_template}")
     
-    final_config = st.text_area(
-        "Generated CLI Commands:",
+    # ВМЕСТО st.text_area ИСПОЛЬЗУЕМ st_ace
+    # Это создаст темное окно с подсветкой, номерами строк и моноширинным шрифтом
+    final_config = st_ace(
         value=st.session_state['generated_config'],
-        height=450
+        language='sh',         # Подсветка синтаксиса (sh подходит для Cisco/Linux конфигов)
+        theme='monokai',       # Темная тема "как у хакеров"
+        keybinding='vscode',   # Привычные горячие клавиши
+        font_size=14,          # Размер шрифта
+        tab_size=4,            # Табуляция
+        show_gutter=True,      # Показывать номера строк
+        wrap=True,             # Перенос строк
+        auto_update=True,      # Обновлять переменную при вводе
+        height=600             # ВЫСОТА ОКНА (было 450, ставим 600 или 800)
     )
     
     col1, col2 = st.columns([1, 6])
@@ -214,7 +226,6 @@ if st.session_state['step'] == 2:
                 st.error("Authentication required!")
             else:
                 with st.spinner(f"Deploying to {target_ip}..."):
-                    # Update inventory (in case password changed)
                     create_inventory_file(target_ip, driver_platform, username, password)
                     
                     try:
@@ -223,7 +234,6 @@ if st.session_state['step'] == 2:
                             inventory={"plugin": "SimpleInventory", "options": {"host_file": "hosts.yaml"}}
                         )
                         
-                        # Send commands
                         push_res = nr_push.run(
                             task=send_configs,
                             configs=final_config.splitlines()
@@ -243,9 +253,8 @@ if st.session_state['step'] == 2:
     with col2:
         if st.button("Back"):
             st.session_state['step'] = 1
-            st.rerun() # Reruns the script to reset the view
+            st.rerun()
 
 else:
-    # Welcome Screen
     st.info("👈 Please fill in the details in the sidebar to start.")
 
